@@ -27,10 +27,10 @@ if [ $? -ne 0 ]; then
 fi
 
 echo -e "\e[36m Building kernel for ${BOARD} board! \e[0m"
-echo -e "\e[36m Using ${DEFCONFIG} \e[0m"
 
 cd ${LOCALPATH}/kernel
-make ${DEFCONFIG}
+[ ! -e .config ] && echo -e "\e[36m Using ${DEFCONFIG} \e[0m" && make ${DEFCONFIG}
+
 make -j8
 cd ${LOCALPATH}
 
