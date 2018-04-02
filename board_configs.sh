@@ -28,6 +28,14 @@ case ${BOARD} in
 		export CROSS_COMPILE=aarch64-linux-gnu-
 		CHIP="rk3399"
 		;;
+	"ficus")
+		DEFCONFIG=rockchip_linux_defconfig
+		UBOOT_DEFCONFIG=evb-rk3399_defconfig
+		DTB=ficus-linux.dtb
+		export ARCH=arm64
+		export CROSS_COMPILE=aarch64-linux-gnu-
+		CHIP="rk3399"
+		;;
 	"rk3399-firefly")
 		DEFCONFIG=rockchip_linux_defconfig
 		UBOOT_DEFCONFIG=firefly-rk3399_defconfig
