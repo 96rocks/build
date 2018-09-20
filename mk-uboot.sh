@@ -82,7 +82,7 @@ elif [ "${CHIP}" == "rk3399" ]; then
 	tools/mkimage -n rk3399 -T rksd -d ../rkbin/bin/rk33/rk3399_ddr_800MHz_v1.12.bin idbloader.img
 	cat ../rkbin/bin/rk33/rk3399_miniloader_v1.12.bin >> idbloader.img
 	cp idbloader.img ${OUT}/u-boot/
-	cp ../rkbin/bin/rk33/rk3399_miniloader_v1.12.bin ${OUT}/u-boot/
+	cp ../rkbin/bin/rk33/rk3399_loader_v1.12.112.bin ${OUT}/u-boot/
 
 	cat >trust.ini <<EOF
 [VERSION]
