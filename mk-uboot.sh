@@ -79,8 +79,8 @@ EOF
 elif [ "${CHIP}" == "rk3399" ]; then
 	$TOOLPATH/loaderimage --pack --uboot ./u-boot-dtb.bin uboot.img 0x200000
 
-	tools/mkimage -n rk3399 -T rksd -d ../rkbin/bin/rk33/rk3399_ddr_800MHz_v1.12.bin idbloader.img
-	cat ../rkbin/bin/rk33/rk3399_miniloader_v1.12.bin >> idbloader.img
+	tools/mkimage -n rk3399 -T rksd -d ../rkbin/bin/rk33/rk3399_ddr_800MHz_v1.14.bin idbloader.img
+	cat ../rkbin/bin/rk33/rk3399_miniloader_v1.15.bin >> idbloader.img
 	cp idbloader.img ${OUT}/u-boot/
 	cp ../rkbin/bin/rk33/rk3399_loader_v1.12.112.bin ${OUT}/u-boot/
 
@@ -92,7 +92,7 @@ MINOR=0
 SEC=0
 [BL31_OPTION]
 SEC=1
-PATH=../rkbin/bin/rk33/rk3399_bl31_v1.17.elf
+PATH=../rkbin/bin/rk33/rk3399_bl31_v1.18.elf
 ADDR=0x10000
 [BL32_OPTION]
 SEC=0
