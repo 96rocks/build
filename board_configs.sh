@@ -22,7 +22,7 @@ case ${BOARD} in
 		;;
 	"rock960ab")
 		DEFCONFIG=rockchip_linux_defconfig
-		UBOOT_DEFCONFIG=evb-rk3399_defconfig
+		UBOOT_DEFCONFIG=rock960-ab-rk3399_defconfig
 		DTB=rock960-model-ab-linux.dtb
 		export ARCH=arm64
 		export CROSS_COMPILE=aarch64-linux-gnu-
@@ -30,7 +30,7 @@ case ${BOARD} in
 		;;
 	"rock960c")
 		DEFCONFIG=rockchip_linux_defconfig
-		UBOOT_DEFCONFIG=evb-rk3399_defconfig
+		UBOOT_DEFCONFIG=rock960-c-rk3399_defconfig
 		DTB=rock960-model-c-linux.dtb
 		export ARCH=arm64
 		export CROSS_COMPILE=aarch64-linux-gnu-
@@ -38,7 +38,7 @@ case ${BOARD} in
 		;;
 	"rockpi4b")
 		DEFCONFIG=rockchip_linux_defconfig
-		UBOOT_DEFCONFIG=evb-rk3399_defconfig
+		UBOOT_DEFCONFIG=rock-pi-4b-rk3399_defconfig
 		DTB=rockpi-4b-linux.dtb
 		export ARCH=arm64
 		export CROSS_COMPILE=aarch64-linux-gnu-
