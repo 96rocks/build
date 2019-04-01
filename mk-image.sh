@@ -85,7 +85,7 @@ generate_system_image() {
 	# but this will overrite the backup table of GPT
 	# will cause corruption error for GPT
 	IMG_ROOTFS_SIZE=$(stat -L --format="%s" ${ROOTFS_PATH})
-	GPTIMG_MIN_SIZE=$(expr $IMG_ROOTFS_SIZE + \( ${LOADER1_SIZE} + ${RESERVED1_SIZE} + ${RESERVED2_SIZE} + ${LOADER2_SIZE} + ${ATF_SIZE} + ${BOOT_SIZE} + 35 \) \* 512)
+	GPTIMG_MIN_SIZE=$(expr $IMG_ROOTFS_SIZE + \( ${LOADER1_SIZE} + ${RESERVED1_SIZE} + ${RESERVED2_SIZE} + ${LOADER2_SIZE} + ${ATF_SIZE} + ${RESOURCE_SIZE} + ${BOOT_SIZE} + 35 \) \* 512)
 	GPT_IMAGE_SIZE=$(expr $GPTIMG_MIN_SIZE \/ 1024 \/ 1024 + 2)
 
 	dd if=/dev/zero of=${SYSTEM} bs=1M count=0 seek=$GPT_IMAGE_SIZE
@@ -95,9 +95,10 @@ generate_system_image() {
 	# parted -s ${SYSTEM} unit s mkpart reserved1 ${RESERVED1_START} $(expr ${RESERVED2_START} - 1)
 	# parted -s ${SYSTEM} unit s mkpart reserved2 ${RESERVED2_START} $(expr ${LOADER2_START} - 1)
 	parted -s ${SYSTEM} unit s mkpart loader2 ${LOADER2_START} $(expr ${ATF_START} - 1)
-	parted -s ${SYSTEM} unit s mkpart trust ${ATF_START} $(expr ${BOOT_START} - 1)
+	parted -s ${SYSTEM} unit s mkpart trust ${ATF_START} $(expr ${RESOURCE_START} - 1)
+	parted -s ${SYSTEM} unit s mkpart resource ${RESOURCE_START} $(expr ${BOOT_START} - 1)
 	parted -s ${SYSTEM} unit s mkpart boot ${BOOT_START} $(expr ${ROOTFS_START} - 1)
-	parted -s ${SYSTEM} set 4 boot on
+	parted -s ${SYSTEM} set 5 boot on
 	parted -s ${SYSTEM} -- unit s mkpart rootfs ${ROOTFS_START} -34s
 
 	if [ "$CHIP" == "rk3328" ] || [ "$CHIP" == "rk3399" ]; then
@@ -109,7 +110,7 @@ generate_system_image() {
 	gdisk ${SYSTEM} <<EOF
 x
 c
-5
+6
 ${ROOT_UUID}
 w
 y
@@ -129,6 +130,9 @@ EOF
 		dd if=${OUT}/u-boot/uboot.img of=${SYSTEM} seek=${LOADER2_START} conv=notrunc
 		dd if=${OUT}/u-boot/trust.img of=${SYSTEM} seek=${ATF_START} conv=notrunc
 	fi
+
+	# burn resource image
+	dd if=${OUT}/resource.img of=${SYSTEM} conv=notrunc seek=${RESOURCE_START}
 
 	# burn boot image
 	dd if=${OUT}/boot.img of=${SYSTEM} conv=notrunc seek=${BOOT_START}

@@ -31,7 +31,8 @@ echo -e "\e[36m Building kernel for ${BOARD} board! \e[0m"
 cd ${LOCALPATH}/kernel
 [ ! -e .config ] && echo -e "\e[36m Using ${DEFCONFIG} \e[0m" && make ${DEFCONFIG}
 
-make -j8
+make ${DTB%.dtb}.img -j8
+
 cd ${LOCALPATH}
 
 KERNEL_VERSION=$(cat ${LOCALPATH}/kernel/include/config/kernel.release)
@@ -49,6 +50,8 @@ else
 	cp ${LOCALPATH}/kernel/arch/arm64/boot/Image ${OUT}/kernel/
 	cp ${LOCALPATH}/kernel/arch/arm64/boot/dts/rockchip/${DTB} ${OUT}/kernel/
 fi
+
+cp ${LOCALPATH}/kernel/resource.img ${OUT}
 
 # Change extlinux.conf according board
 sed -e "s,fdt .*,fdt /$DTB,g" \
