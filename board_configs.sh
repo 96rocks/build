@@ -52,6 +52,14 @@ case ${BOARD} in
 		export CROSS_COMPILE=aarch64-linux-gnu-
 		CHIP="rk3399"
 		;;
+	"zaku")
+		DEFCONFIG=rockchip_linux_defconfig
+		UBOOT_DEFCONFIG=zaku-rk3399_defconfig
+		DTB=rk3399-zaku-linux.dtb
+		export ARCH=arm64
+		export CROSS_COMPILE=aarch64-linux-gnu-
+		CHIP="rk3399"
+		;;
 	"rockpi4b")
 		DEFCONFIG=rockchip_linux_defconfig
 		DEFCONFIG_MAINLINE=defconfig
